@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="Stardard_tiles" tilewidth="32" tileheight="32" tilecount="667">
+  <image source="32x32_map_tile v3.1 [MARGINLESS].png" trans="ffffff" width="736" height="928"/>
+ </tileset>
+ <tileset firstgid="668" name="Collision_tiles" tilewidth="32" tileheight="32" tilecount="2">
+  <image source="meta_tiles.png" trans="000000" width="67" height="34"/>
+ </tileset>
+ <layer name="Ground" width="50" height="50" opacity="0.8">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3TMQqAMBBFwXijlN7/Ml7DShRRY1TYRaaYIt1/sKmllAoAdJuG1bh7L6I3Xm0+ctaRqaXV0OrI0HKnQUeuhuz/4y8db+8qevuTluiNX/RE7wIAAAAAANiaAaYtu6gQJwAA
+  </data>
+ </layer>
+ <layer name="LevelA" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3Y0QmAIBRA0edsrdI20RLVEuEWLtEaYRFW+FFRPZ7cA2H6dSuEUKRMtXYAFpN2wAeazFr4veIdXtb2OIpL81Yz6iafucLu3oIg6b1v/YMcn8mS8/eIruyRyn2W9Ehs7rQjAAAwwNK/I/J67QCYNmbWSjwLAAAAAAAAAGDHDF7wxbgQJwAA
+  </data>
+ </layer>
+ <layer name="Collision" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3TQQqAMAxE0eL9j+BhJQuh1EICXXSc/gcu1E2+qa15uq/dEyA47sGxaXRCo6L+u5+4A8XmbKZ4/17jff9cyWzGSodSS9aQdSi0VBro0GpQ/z9cOsJKh5pqx1+4dOCLHWLF7PxwpgAAAAAAAADs9ACnzZnsECcAAA==
+  </data>
+ </layer>
+</map>
