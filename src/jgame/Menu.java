@@ -64,7 +64,7 @@ public class Menu extends BasicGameState {
 		toolsButton.render(gc, g);
 		if (startButton.isMouseOver()) {
 			final Input input = gc.getInput();
-			new InfoBox(200, 100, "This is my info-box").draw(input.getMouseX(), input.getMouseY(), g, Color.blue);
+			new InfoBox(100, "This is my info-box", g).draw(input.getMouseX(), input.getMouseY(), g, Color.blue);
 		}
 	}
 

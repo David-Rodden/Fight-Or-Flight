@@ -7,10 +7,10 @@ public class InfoBox {
 	private final int width, height;
 	private final String text;
 
-	public InfoBox(final int width, final int height, final String text) {
-		this.width = width;
+	public InfoBox(final int height, final String text, Graphics g) {
 		this.height = height;
 		this.text = text;
+		width = g.getFont().getWidth(text);
 	}
 
 	public int getWidgth() {
@@ -25,6 +25,6 @@ public class InfoBox {
 		g.setColor(c);
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.white);
-		g.drawString(text, x + width / 2, y + height / 2);
+		g.drawString(text, x, y + height / 2);
 	}
 }

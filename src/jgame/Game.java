@@ -34,6 +34,6 @@ public class Game extends StateBasedGame {
 		final GameStatus[] gs = GameStatus.values();
 		for (int i = 0; i < gs.length; i++)
 			this.getState(gs[i].getState()).init(gc, this);
-		this.enterState(GameStatus.PLAY.getState());
+		this.enterState(GameStatus.MENU.getState());
 	}
 }
