@@ -1,12 +1,10 @@
 package jgame;
 
-import org.newdawn.slick.Animation;
+import java.io.IOException;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -14,7 +12,8 @@ import org.newdawn.slick.tiled.TiledMap;
 public class Play extends BasicGameState {
 	private final int state;
 	private TiledMap map;
-	private int width, height, centerX, centerY, collisionLayer, overLayer;
+	private int width, height, centerX, centerY, collisionLayer;
+	private int[] overLayers;
 	private LocalPlayer user;
 
 	public Play(final int state) {
@@ -25,15 +24,20 @@ public class Play extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		map = new TiledMap("res/maps/mapTest.tmx");
 		collisionLayer = map.getLayerIndex("Collision");
-		overLayer = map.getLayerIndex("Over");
+		overLayers = new int[] { map.getLayerIndex("Over"), map.getLayerIndex("OverB") };
 		width = map.getTileWidth();
 		height = map.getTileHeight();
-		user = new LocalPlayer(5, 5, map);
+		try {
+			user = new LocalPlayer(20, 5, map);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		user.draw(gc, g, collisionLayer, overLayer);
+		user.draw(gc, g, collisionLayer, overLayers);
+
 	}
 
 	@Override

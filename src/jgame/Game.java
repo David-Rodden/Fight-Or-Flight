@@ -3,7 +3,6 @@ package jgame;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Game extends StateBasedGame {
@@ -34,6 +33,6 @@ public class Game extends StateBasedGame {
 		final GameStatus[] gs = GameStatus.values();
 		for (int i = 0; i < gs.length; i++)
 			this.getState(gs[i].getState()).init(gc, this);
-		this.enterState(GameStatus.MENU.getState());
+		this.enterState(GameStatus.PLAY.getState());
 	}
 }

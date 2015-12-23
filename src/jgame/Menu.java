@@ -20,6 +20,7 @@ public class Menu extends BasicGameState {
 	private Image menuPic, titlePic, startPic, toolsPic, startPicHover, toolsPicHover, cursor;
 	private MouseOverArea startButton, toolsButton;
 	private Sound openSound;
+	private boolean isClickable;
 
 	public Menu(final int state) {
 		this.state = state;
@@ -27,6 +28,7 @@ public class Menu extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, final StateBasedGame sbg) throws SlickException {
+		isClickable = true;
 		menuPic = new Image("res/castle_ruins.jpg").getScaledCopy(gc.getHeight() / 670f);
 		titlePic = new Image("res/Fight-Or-Flight.png");
 		startPic = new Image("res/Play.png");
@@ -39,8 +41,10 @@ public class Menu extends BasicGameState {
 
 			@Override
 			public void componentActivated(AbstractComponent ac) {
+				if (!isClickable) return;
 				openSound.play();
 				sbg.enterState(GameStatus.PLAY.getState(), new FadeOutTransition(Color.black, 1500), new FadeInTransition(Color.black, 1500));
+				isClickable = false;
 			}
 		});
 		startButton.setMouseOverImage(startPicHover);
@@ -48,7 +52,9 @@ public class Menu extends BasicGameState {
 
 			@Override
 			public void componentActivated(AbstractComponent ac) {
+				if (isClickable) return;
 				sbg.enterState(GameStatus.MENU.getState());
+				isClickable = false;
 			}
 		});
 		toolsButton.setMouseOverImage(toolsPicHover);

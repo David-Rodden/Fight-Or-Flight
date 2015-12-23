@@ -1,34 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="12">
  <tileset firstgid="1" name="Stardard_tiles" tilewidth="32" tileheight="32" tilecount="667">
   <image source="32x32_map_tile v3.1 [MARGINLESS].png" trans="ffffff" width="736" height="928"/>
+  <terraintypes>
+   <terrain name="Water" tile="486"/>
+   <terrain name="Grass" tile="47"/>
+  </terraintypes>
  </tileset>
  <tileset firstgid="668" name="Collision_tiles" tilewidth="32" tileheight="32" tilecount="2">
   <image source="meta_tiles.png" trans="000000" width="67" height="34"/>
  </tileset>
+ <tileset firstgid="670" name="Standard_tiles2" tilewidth="32" tileheight="32" tilecount="1024">
+  <image source="terrain_atlas.png" trans="ffffff" width="1024" height="1024"/>
+ </tileset>
  <layer name="Ground" width="50" height="50" opacity="0.8">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3TMQqAMBBFwXijlN7/Ml7DShRRY1TYRaaYIt1/sKmllAoAdJuG1bh7L6I3Xm0+ctaRqaXV0OrI0HKnQUeuhuz/4y8db+8qevuTluiNX/RE7wIAAAAAANiaAaYtu6gQJwAA
+   H4sIAAAAAAAAC+3RMQ7CMAxA0UhxmRh7hMJJKPdAwFHhJnAO4iHCrdygTrjSH96QKqr84z6n1AMAgFVEUuqMfTc9Vzv5/6xLM6t3+X6QL+2w5+qVY7SIM7N1mXXcnTvHAB2DM7NnaR8ROrxdXDfYMTTev7o1OnR/j/Kf8wY67D7mu4rQoE5lhmf+3aDzascoUxEabMvY6Iny5mt7Ir85AAAAAAAAAACA+gDJ10UIECcAAA==
   </data>
  </layer>
  <layer name="LevelA" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3YwQnCMBiG4T8bOIhO4RSKR6+C4BjiEuoS0gX0mgm8uYLeTGykWiPGtCFW3gc+2uaQfmkolIr8p2nuArg5JZx7ZDJ2mSS8T93SM6YbzDc3mbksGswTo5Cyuz2Kqq5XEXPtTY4uh3bqBSk80Q/n7/TNegfqdTzHOrRUz/3efyvPa/rW2aSnylzaKhqovh9WyDsy9OxHTrbzOncJAAA6IObbEb9lk7sAOm3nGUv5LwAAAAAAAAAAPrkCCrQBlBAnAAA=
+   H4sIAAAAAAAAC+2YTUrDQBiGp22SnehOvYK/S/UI6tafKi6LrgRB0LovURBPoG5U6gFcSS+gKyUncNUoqGvd+Y2Z0C9xMk1Ca2bK98BLk2kS3qeZSUsZG0xqRRcgfvEV761ZjK2jVK1s196AbIps5a+YmdPY/gH0PkSpZ/TYg+yK7PemYmpaEE+8slJn/yzHtR4gLyKPvamXipYkHtrmVG2YL3b0vHOHsQvIpRMdL8LDY53PPex/w6JOnDo4HEFWkctdWX7NL8hIKch3v4onEL8fi07gNAFrYxKtjxXh8d5lzQxVGBuu9KWqEt75SjK+BH2XEzr7MP6K8oaOK8ojDy70PkY5gTSFiwkeTcn9qcE8vIXxtkEebYkHd/PR3NLZoyGer43Y83fbCdxcMbc4Onsk4Tp/3Uz0kIE9RsFxDDJuq8/REewxB/3nIQsaekyJTs8J3+kmzCv+G+YD+n8q8lTW34MzDR1numTWAI+sXBddALFjybdNgvcOg8dMROYS514ypvov4D/B3dO46M6gzKsQ0/sTBEEQBEEQBEEQBEEQ+vID9kME+hAnAAA=
   </data>
  </layer>
  <layer name="Collision" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3TQQ6AIAwFUeL9j+BhTXcEtRBR+2nmJe6MdABLyWnfoieA+fIc7Nv185e314rq8DyZQ7HDczdnZEe93uzaq52HUZyzN1O7x+2+qzZ5j/eOil5Dr0OhZaSBDq0G9f8jS4eZ6VAz2rGKLB044wwx4+r+cKcAAAAAAAAARDoAvcq3uhAnAAA=
+   H4sIAAAAAAAAC+3SQQrAIAwAQen/n9DHFg8FkRijHpLIDvQk1Sxayp3ex3sCVNo91LX+W917998Ts7OydGh25ojYMSPN6dnRnqfNZt0ryn385/ezeM9lYXkjbZe2FsFoPmtHhBZLAx2xGujI1THaO1NHFCsdGdzSARl3iBPS++FNAQAAAAAAAPD0Aa2TcQEQJwAA
   </data>
  </layer>
  <layer name="Over" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3PuwmAUBBE0X1F+KlCexBswjLsP3ADE40EgwU9ByafG8HfLLnt3Fr85YmhRYyt+sV7UzbMH+josqG/dew1VwAAAAAAAAAA4OIA0azbGRAnAAA=
+   H4sIAAAAAAAAC+3UwQnCQBSE4XdI0osNaEC9CPagiTaRa7QNtQO1AbUyz5mAhz26RFle+D+Y48IMPNYM3kwzs1mQMot7v1KqT9Z/6Pdr88JsoSyL1E2GqdV/p+yd72jV/6Acgx1Nujpf2eRm2zx1i3gT57cS46p/7BbkHvmvAUOcdG9n5eL87h7q/1Reznf03iPY0BvLDgAAAAAAAAAAAMCTDnUesGsQJwAA
   </data>
  </layer>
  <layer name="LevelB" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3OoQ0AAAjAMP6/AX5FkaAxmFZNLgKAkavr7QIAAAAAAAAAgIsGbcDw6hAnAAA=
+   H4sIAAAAAAAAC+3OoREAIAwAsaoOw8yway26cFeTqJcfAfy0cvqAF/vqM3YBAAAAAAAAAEBHAWOHcMEQJwAA
+  </data>
+ </layer>
+ <layer name="OverB" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OsQ0AIAwEsS+y/3iEcWALiGRL118CAAB/WJX0bdfrEwAAAAAAAGCiA+54sa4QJwAA
+  </data>
+ </layer>
+ <layer name="Hurtful" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3SMQoAIAwDQPH/X/Cv4iA4dNfIHRRKpwTaGgAAAMB9o9d7kpV7z3lLVHVJcmZP77L88ldben4AAAAA3jUBTndPExAnAAA=
   </data>
  </layer>
 </map>
