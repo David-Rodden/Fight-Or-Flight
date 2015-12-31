@@ -1,15 +1,11 @@
 package jgame;
 
-import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -30,11 +26,14 @@ public class LocalPlayer {
 	private int rX, rY, pos, tileWidth, tileHeight;
 	private Animation[] currAnim;
 	private final TiledMap map;
-	private Skill healthSkill, endurance;
+	private Skills skills;
 	private int health;
 	private Tile currentTile;
 	private int alpha, max;
 	private boolean isHurt;
+	private int gain;
+	private LevelUp lu;
+	private Inventory inventory;
 
 	public LocalPlayer(final int x, final int y, final TiledMap map) throws SlickException, IOException {
 		File charFolder = new File("res/sprites/local_char");
@@ -42,10 +41,8 @@ public class LocalPlayer {
 		characterSprites = new SpriteSheet[p.length];
 		for (int i = 0; i < characterSprites.length; i++)
 			characterSprites[i] = new SpriteSheet(p[i].toUri().toURL(), 64, 64);
-
-		healthSkill = new Skill("Health", 200);
-		endurance = new Skill("Endurance");
-		health = healthSkill.getLevel() - 2;
+		skills = new Skills();
+		health = skills.getHealth().getLevel();
 		this.map = map;
 		tileWidth = map.getTileWidth();
 		tileHeight = map.getTileHeight();
@@ -70,6 +67,7 @@ public class LocalPlayer {
 		rY = y * tileHeight;
 		alpha = 0;
 		max = 255;
+		inventory = new Inventory(1, 2);
 	}
 
 	public void update(GameContainer gc, final int collisionLayer) {
@@ -80,7 +78,6 @@ public class LocalPlayer {
 			else
 				alpha += alpha + alphaAmt >= max ? max - alpha : alphaAmt;
 		} else if (!isHurt && alpha > 0) alpha -= alpha < alphaAmt ? alpha : alphaAmt;
-		Input input = gc.getInput();
 		int currX = currentTile.getX(), currY = currentTile.getY();
 		if (rX != currX || rY != currY) {
 			if (currAnim.length == 0) return;
@@ -100,6 +97,12 @@ public class LocalPlayer {
 		}
 		currX = currentTile.getTileX();
 		currY = currentTile.getTileY();
+		Input input = gc.getInput();
+		// keys for testing purposes to see if item-spawning works with
+		// inventory
+		final int[] keys = { Input.KEY_0, Input.KEY_1, Input.KEY_2, Input.KEY_3, Input.KEY_4, Input.KEY_5, Input.KEY_6 };
+		for (int i = 0; i < keys.length; i++)
+			if (input.isKeyPressed(keys[i])) inventory.addItem(i);
 		if (input.isKeyDown(Input.KEY_UP)) {
 			if (isWalkable(map, collisionLayer, currX, currY - 1)) currentTile.alterY(-1);
 			pos = 0;
@@ -120,6 +123,10 @@ public class LocalPlayer {
 		}
 		for (int i = 0; i < currAnim.length; i++)
 			currAnim[i] = equipment[i][pos];
+		if (gain != 0) {
+			lu = new LevelUp(gc, gain, "Endurance");
+			gain = 0;
+		}
 	}
 
 	public void draw(GameContainer gc, Graphics g, final int collisionLayer, final int[] overLayers) {
@@ -136,14 +143,28 @@ public class LocalPlayer {
 		g.setColor(Color.red);
 		g.fillRoundRect(750, 10, 200, 15, 5);
 		g.setColor(Color.green);
+		final Skill healthSkill = skills.getHealth();
 		g.fillRoundRect(750, 10, 200 * health / healthSkill.getLevel(), 15, 5);
 		g.setColor(Color.white);
 		g.drawRoundRect(750, 10, 200, 15, 5);
 		g.setColor(Color.blue);
 		g.drawString(health + " / " + healthSkill.getLevel(), 830, 9);
 		g.setColor(Color.white);
+		final Skill endurance = skills.getEndurance();
 		final int lvl = endurance.getLevel();
 		g.drawString("Endurance:\nLevel:" + lvl + "\nXp:" + endurance.getExperience() / 10 + "/" + endurance.getExperienceAt(lvl + 1) / 10, 100, 10);
+		if (lu != null && lu.getHeight() > 0) lu.draw(g);
+		final List<Slot> slots = inventory.getSlots();
+		g.setColor(Color.yellow);
+		final int slotsFull = slots.size();
+		g.drawString("Inventory: (" + slotsFull + "/" + Inventory.SLOTS + ")", 700, 40);
+		for (int i = 0; i < slotsFull; i++) {
+			final Slot current = slots.get(i);
+			final int amount = current.getAmount();
+			final String currName = current.getItem().getName() + (amount > 1 ? " X " + amount : "");
+			g.drawString(currName, 700, 40 + (i + 1) * 20);
+			g.drawRect(698, 40 + (i + 1) * 20, g.getFont().getWidth(currName) + 4, 20);
+		}
 	}
 
 	public int getX() {
@@ -172,7 +193,9 @@ public class LocalPlayer {
 
 	private boolean isWalkable(final TiledMap map, final int collisionLayer, final int x, final int y) {
 		final boolean walkable = (x >= 0 && x < map.getWidth() && y >= 0 && y < map.getHeight()) && map.getTileId(x, y, collisionLayer) == 0;
-		if (walkable) endurance.updateExperience(1);
+		if (walkable) {
+			gain = skills.getEndurance().updateExperience(1);
+		}
 		return walkable;
 	}
 

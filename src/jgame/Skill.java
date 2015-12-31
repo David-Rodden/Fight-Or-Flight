@@ -22,8 +22,8 @@ public class Skill {
 	public static void main(String[] args) {
 		Skill s = new Skill("test");
 		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-		for (int i = 0; i <= 280; i += 10)
-			System.out.println("Level " + i + ": " + df.format(s.getExperienceAt(i)));
+		for (int i = 1; i <= 50; i++)
+			System.out.println("Level " + i + ": " + df.format((s.getExperienceAt(i)) / 10));
 
 	}
 
@@ -34,7 +34,7 @@ public class Skill {
 	public long getExperienceAt(final int level) {
 		long experience = 0;
 		for (int i = 1; i < level; i++)
-			experience += (3 + 5 * i + Math.E * Math.pow(2, i / 5)) * 10;
+			experience += (2 + 5 * i + Math.E * Math.pow(2, i / 5f)) * 10;
 		return experience;
 	}
 
@@ -42,9 +42,11 @@ public class Skill {
 		return level;
 	}
 
-	public void updateExperience(final long experience) {
+	public int updateExperience(final long experience) {
 		this.experience += experience;
+		final int oldLevel = level;
 		level = checkLevel();
+		return level - oldLevel;
 	}
 
 	public String getName() {
@@ -54,7 +56,7 @@ public class Skill {
 	private int checkLevel() {
 		long experience = 0;
 		for (int i = 1;; i++) {
-			experience += (3 + 5 * i + Math.E * Math.pow(2, i / 5)) * 10;
+			experience += (2 + 5 * i + Math.E * Math.pow(2, i / 5f)) * 10;
 			if (experience > this.experience) return i;
 		}
 	}
