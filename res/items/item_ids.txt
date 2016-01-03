@@ -1,0 +1,8 @@
+0 "Shrimp" 0
+1 "Cooked Shrimp" 0
+2 "Bronze Arrow" 1
+3 "Bronze Sword" 0
+4 "Pancakes" 1
+5 "Butter" 0
+6 "Logs" 0
+7 "Arrow Shaft" 1

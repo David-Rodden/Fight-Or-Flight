@@ -9,8 +9,9 @@ public class Slot {
 	}
 
 	public Slot(final int itemId, final int amount) {
-		this.item = Items.getItem(itemId);
-		this.amount = amount;
+		final boolean isUndefined = itemId == Item.UNDEFINED;
+		this.item = isUndefined ? null : Items.getItem(itemId);
+		this.amount = isUndefined ? 0 : amount;
 	}
 
 	public Item getItem() {

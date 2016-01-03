@@ -23,7 +23,7 @@ public class LocalPlayer {
 	private SpriteSheet[] characterSprites;
 	private Animation[][] equipment;
 	private Animation[] walking, gloveAnim;
-	private int rX, rY, pos, tileWidth, tileHeight;
+	private int rX, rY, pos, tileWidth, tileHeight, numDraw;
 	private Animation[] currAnim;
 	private final TiledMap map;
 	private Skills skills;
@@ -68,6 +68,7 @@ public class LocalPlayer {
 		alpha = 0;
 		max = 255;
 		inventory = new Inventory(1, 2);
+		numDraw = 4;
 	}
 
 	public void update(GameContainer gc, final int collisionLayer) {
@@ -100,7 +101,11 @@ public class LocalPlayer {
 		Input input = gc.getInput();
 		// keys for testing purposes to see if item-spawning works with
 		// inventory
-		final int[] keys = { Input.KEY_0, Input.KEY_1, Input.KEY_2, Input.KEY_3, Input.KEY_4, Input.KEY_5, Input.KEY_6 };
+		if (input.isKeyPressed(Input.KEY_8))
+			numDraw++;
+		else if (input.isKeyPressed(Input.KEY_9) && numDraw > 1) numDraw--;
+		if (input.isKeyPressed(Input.KEY_BACK)) inventory.removeItem(2);
+		final int[] keys = { Input.KEY_0, Input.KEY_1, Input.KEY_2, Input.KEY_3, Input.KEY_4, Input.KEY_5, Input.KEY_6, Input.KEY_7 };
 		for (int i = 0; i < keys.length; i++)
 			if (input.isKeyPressed(keys[i])) inventory.addItem(i);
 		if (input.isKeyDown(Input.KEY_UP)) {
@@ -154,17 +159,8 @@ public class LocalPlayer {
 		final int lvl = endurance.getLevel();
 		g.drawString("Endurance:\nLevel:" + lvl + "\nXp:" + endurance.getExperience() / 10 + "/" + endurance.getExperienceAt(lvl + 1) / 10, 100, 10);
 		if (lu != null && lu.getHeight() > 0) lu.draw(g);
-		final List<Slot> slots = inventory.getSlots();
 		g.setColor(Color.yellow);
-		final int slotsFull = slots.size();
-		g.drawString("Inventory: (" + slotsFull + "/" + Inventory.SLOTS + ")", 700, 40);
-		for (int i = 0; i < slotsFull; i++) {
-			final Slot current = slots.get(i);
-			final int amount = current.getAmount();
-			final String currName = current.getItem().getName() + (amount > 1 ? " X " + amount : "");
-			g.drawString(currName, 700, 40 + (i + 1) * 20);
-			g.drawRect(698, 40 + (i + 1) * 20, g.getFont().getWidth(currName) + 4, 20);
-		}
+		Interface.draw(g, inventory);
 	}
 
 	public int getX() {
