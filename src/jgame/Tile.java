@@ -1,5 +1,7 @@
 package jgame;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class Tile {
@@ -33,5 +35,10 @@ public class Tile {
 
 	public void alterY(final int dy) {
 		y += dy;
+	}
+
+	public void draw(final Graphics g) {
+		g.setColor(Color.cyan);
+		g.fillRect(x * dimension, y * dimension, dimension, dimension);
 	}
 }

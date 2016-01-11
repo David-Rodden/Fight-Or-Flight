@@ -34,6 +34,7 @@ public class LocalPlayer {
 	private int gain;
 	private LevelUp lu;
 	private Inventory inventory;
+	private Perspective perspective;
 
 	public LocalPlayer(final int x, final int y, final TiledMap map) throws SlickException, IOException {
 		File charFolder = new File("res/sprites/local_char");
@@ -107,7 +108,7 @@ public class LocalPlayer {
 		if (input.isKeyPressed(Input.KEY_BACK)) inventory.removeItem(2);
 		final int[] keys = { Input.KEY_0, Input.KEY_1, Input.KEY_2, Input.KEY_3, Input.KEY_4, Input.KEY_5, Input.KEY_6, Input.KEY_7 };
 		for (int i = 0; i < keys.length; i++)
-			if (input.isKeyPressed(keys[i])) inventory.addItem(i);
+			if (input.isKeyPressed(keys[i])) inventory.addItems(i, 100000);
 		if (input.isKeyDown(Input.KEY_UP)) {
 			if (isWalkable(map, collisionLayer, currX, currY - 1)) currentTile.alterY(-1);
 			pos = 0;
@@ -160,6 +161,9 @@ public class LocalPlayer {
 		g.drawString("Endurance:\nLevel:" + lvl + "\nXp:" + endurance.getExperience() / 10 + "/" + endurance.getExperienceAt(lvl + 1) / 10, 100, 10);
 		if (lu != null && lu.getHeight() > 0) lu.draw(g);
 		g.setColor(Color.yellow);
+	}
+
+	public void drawStats(final Graphics g) {
 		Interface.draw(g, inventory);
 	}
 

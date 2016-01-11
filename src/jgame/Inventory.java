@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class Inventory {
-	public final static int SLOTS = 20, ITEM_NOT_FOUND = -1, SLOTS_PER_ROW = 4;
+	public final static int SLOTS = 20, ITEM_NOT_FOUND = -1, SLOTS_PER_ROW = 4, THOUSAND = 1_000, MILLION = 1_000_000;
 	private Slot[] slots;
 
 	public Inventory(final int... items) {
@@ -31,19 +31,28 @@ public class Inventory {
 	}
 
 	public void addItems(final int id, final int amount) {
+		int slot = findSlot(id);
+		if (slot != -1 && slots[slot].getItem().isStackable()) {
+			slots[slot].addAmount(amount);
+			return;
+		}
+		slot = findEmptySlot();
+		if (slot == -1) return;
+		slots[slot] = new Slot(id, amount);
+	}
+
+	private int findSlot(final int id) {
 		for (int i = 0; i < SLOTS; i++) {
 			final Item current = slots[i].getItem();
-			if (current != null && current.getId() == id && current.isStackable()) {
-				slots[i].addAmount(amount);
-				return;
-			}
+			if (current != null && current.getId() == id) return i;
 		}
-		for (int i = 0; i < SLOTS; i++) {
-			if (slots[i].getItem() == null) {
-				slots[i] = new Slot(id, amount);
-				break;
-			}
-		}
+		return -1;
+	}
+
+	private int findEmptySlot() {
+		for (int i = 0; i < SLOTS; i++)
+			if (slots[i].getItem() == null) return i;
+		return -1;
 	}
 
 	public void removeItem(final int id) {
@@ -72,16 +81,18 @@ public class Inventory {
 				row = 0;
 			}
 			final int dX = row * dimension, dY = col * dimension;
-			g.setColor(new Color(142, 90, 38, 155));
-			g.fillRect(x + dX, y + dY, dimension, dimension);
+			// g.setColor(new Color(142, 90, 38, 155));
+			// g.fillRect(x + dX, y + dY, dimension, dimension);
 			g.setColor(Color.yellow);
-			g.drawRect(x + dX, y + dY, dimension, dimension);
+			// g.drawRect(x + dX, y + dY, dimension, dimension);
 			final Item currentItem = slots[i].getItem();
 			if (currentItem != null) {
 				final Image icon = currentItem.getIcon();
 				if (icon != null) icon.draw(x + dX, y + dY, dimension, dimension);
 				if (currentItem.isStackable()) {
-					final String amount = String.valueOf(slots[i].getAmount());
+					final int value = slots[i].getAmount();
+					final String amount = String.valueOf(value >= MILLION * 10 ? value / MILLION + "M" : value >= THOUSAND * 10 ? value / THOUSAND
+							+ "K" : value);
 					g.drawString(amount, x + dX + dimension - g.getFont().getWidth("8") * amount.length(), y + dY);
 				}
 			}

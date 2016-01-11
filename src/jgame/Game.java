@@ -6,7 +6,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Game extends StateBasedGame {
-	public static int FPS = 50;
+	public static final int X_ORIG = 900, Y_ORIG = 650;
+	public static int FPS = 50, X_DIM = X_ORIG, Y_DIM = Y_ORIG;
 
 	public Game(String name) {
 		super(name);
@@ -18,7 +19,7 @@ public class Game extends StateBasedGame {
 		AppGameContainer agc;
 		try {
 			agc = new AppGameContainer(new Game("Fight or Flight"));
-			agc.setDisplayMode(1000, 720, false);
+			agc.setDisplayMode(X_DIM, Y_DIM, false);
 			agc.setTargetFrameRate(FPS);
 			agc.setVSync(true);
 			agc.setAlwaysRender(true);
@@ -33,6 +34,19 @@ public class Game extends StateBasedGame {
 		final GameStatus[] gs = GameStatus.values();
 		for (int i = 0; i < gs.length; i++)
 			this.getState(gs[i].getState()).init(gc, this);
-		this.enterState(GameStatus.PLAY.getState());
+		this.enterState(GameStatus.MENU.getState());
+	}
+
+	public static void setWindowDimensions(final int x, final int y) {
+		X_DIM = x;
+		Y_DIM = y;
+	}
+
+	public static int getCorrectSizeX(final int size) {
+		return X_DIM * size / X_ORIG;
+	}
+
+	public static int getCorrectSizeY(final int size) {
+		return Y_DIM * size / Y_ORIG;
 	}
 }

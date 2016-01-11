@@ -38,5 +38,4 @@ public class Items {
 	public static Item getItem(final int id) {
 		return items.stream().filter(i -> i.getId() == id).findFirst().get();
 	}
-
 }
